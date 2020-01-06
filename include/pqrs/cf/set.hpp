@@ -1,6 +1,6 @@
 #pragma once
 
-// pqrs::cf::set v0.0
+// pqrs::cf::set v1.0
 
 // (C) Copyright Takayama Fumihiko 2020.
 // Distributed under the Boost Software License, Version 1.0.
