@@ -1,25 +1,30 @@
-#define CATCH_CONFIG_MAIN
-#include <catch2/catch.hpp>
-
+#include <boost/ut.hpp>
 #include <pqrs/cf/set.hpp>
 
-TEST_CASE("make_empty_cf_set") {
-  auto set = pqrs::cf::make_empty_cf_set();
-  REQUIRE(set);
-  REQUIRE(CFSetGetCount(*set) == 0);
-}
+int main(void) {
+  using namespace boost::ut;
+  using namespace boost::ut::literals;
 
-TEST_CASE("make_cf_mutable_set") {
-  auto set = pqrs::cf::make_cf_mutable_set();
-  REQUIRE(set);
-  REQUIRE(CFGetRetainCount(*set) == 1);
-  REQUIRE(CFSetGetCount(*set) == 0);
+  "make_empty_cf_set"_test = [] {
+    auto set = pqrs::cf::make_empty_cf_set();
+    expect(set);
+    expect(CFSetGetCount(*set) == 0);
+  };
 
-  auto string1 = CFSTR("string1");
-  auto string2 = CFSTR("string2");
+  "make_cf_mutable_set"_test = [] {
+    auto set = pqrs::cf::make_cf_mutable_set();
+    expect(set);
+    expect(CFGetRetainCount(*set) == 1);
+    expect(CFSetGetCount(*set) == 0);
 
-  CFSetAddValue(*set, string1);
-  CFSetAddValue(*set, string2);
+    auto string1 = CFSTR("string1");
+    auto string2 = CFSTR("string2");
 
-  REQUIRE(CFSetGetCount(*set) == 2);
+    CFSetAddValue(*set, string1);
+    CFSetAddValue(*set, string2);
+
+    expect(CFSetGetCount(*set) == 2);
+  };
+
+  return 0;
 }
