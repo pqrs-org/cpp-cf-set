@@ -1,7 +1,7 @@
 #include <boost/ut.hpp>
 #include <pqrs/cf/set.hpp>
 
-int main(void) {
+int main() {
   using namespace boost::ut;
   using namespace boost::ut::literals;
 
@@ -24,6 +24,13 @@ int main(void) {
     CFSetAddValue(*set, string2);
 
     expect(CFSetGetCount(*set) == 2);
+  };
+
+  "make_cf_mutable_set with capacity"_test = [] {
+    auto set = pqrs::cf::make_cf_mutable_set(2);
+    expect(set);
+    expect(CFGetRetainCount(*set) == 1);
+    expect(CFSetGetCount(*set) == 0);
   };
 
   return 0;
